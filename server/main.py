@@ -1,10 +1,13 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from alert import Alert
 from store import Store
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 
 # CORS so React frontend can connect
 app.add_middleware(

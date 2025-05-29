@@ -173,3 +173,6 @@ cython_debug/
 
 # ADK source files for Copilot
 adk/
+
+# Google App Engine files (Known to contain API_KEY)
+app.yaml
