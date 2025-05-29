@@ -1,12 +1,8 @@
+service: default
 runtime: python312
 
-entrypoint: uvicorn main:app 
+entrypoint: gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app
+instance_class: F2
 
 env_variables:
   SOME_ENV_VAR: "value"  # Add any environment variables here, if needed
-
-handlers:
-  - url: /static
-    static_dir: static  # Serve static files, if any
-  - url: /.*  # Handle all other requests with the FastAPI app
-    script: auto
