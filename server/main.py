@@ -1,4 +1,5 @@
 from datetime import datetime
+import pytz
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from contextlib import asynccontextmanager
@@ -43,10 +44,11 @@ def get_store():
 app.dependency_overrides[Store] = get_store
 
 async def repeat_task():
-    timestamp = datetime.now().isoformat()
+    new_york_tz = pytz.timezone('America/New_York')
+    timestamp = datetime.now(new_york_tz).isoformat()
 
     alerts = store.get_all()
     for alert in alerts:
         alert.last = timestamp
-        
+
     print("Repeating task executed")
