@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from alert import Alert
 
@@ -6,13 +6,13 @@ class Store:
     def __init__(self):
         self.alerts: List[Alert] = []
 
-    def add_or_update(self, new_alert: Alert):
+    def add_or_update(self, new_alert: Alert) -> str:
         for idx, alert in enumerate(self.alerts):
             if alert.symbol == new_alert.symbol:
                 self.alerts[idx] = new_alert
-                return "updated"
+                return 'updated'
         self.alerts.append(new_alert)
-        return "added"
+        return 'added'
 
     def delete(self, symbol: str) -> bool:
         initial_count = len(self.alerts)
