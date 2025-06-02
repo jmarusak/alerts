@@ -18,10 +18,7 @@ app.add_middleware(
 )
 
 store = Store()
-
-store.add_or_update(Alert(symbol='AAPL', below=180.0, above=220.0, last='2025-05-29T10:00'))
-store.add_or_update(Alert(symbol='NVDA', below=135.0, above=143.0, last='2025-05-29T11:24'))
-store.add_or_update(Alert(symbol='GOOG', below=2500.0, above=2700.0, last='2025-05-28T16:45'))
+store.add_or_update(Alert(symbol='', below=0, above=0, last=''))
 
 app.include_router(api_router)
 
