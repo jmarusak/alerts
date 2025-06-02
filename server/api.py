@@ -4,7 +4,6 @@ from store import Store
 
 router = APIRouter()
 
-
 @router.post('/alert')
 def add_or_update_alert(alert: Alert, store: Store = Depends()):
     result = store.add_or_update(alert)
