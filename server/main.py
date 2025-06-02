@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from api import router as api_router
@@ -24,3 +24,9 @@ store.add_or_update(Alert(symbol='NVDA', below=135.0, above=143.0, last='2025-05
 store.add_or_update(Alert(symbol='GOOG', below=2500.0, above=2700.0, last='2025-05-28T16:45'))
 
 app.include_router(api_router)
+
+# Dependency to inject the store instance
+def get_store():
+    return store
+
+app.dependency_overrides[Store] = get_store
