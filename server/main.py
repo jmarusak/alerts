@@ -1,9 +1,11 @@
+import asyncio
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from api import router as api_router
 from alert import Alert
 from store import Store
+from loop import start_background_loop
 
 app = FastAPI()
 
@@ -27,3 +29,7 @@ def get_store():
     return store
 
 app.dependency_overrides[Store] = get_store
+
+@app.on_event("startup")
+async def startup_event():
+    await start_background_loop(store)
