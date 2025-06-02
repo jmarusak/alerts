@@ -1,13 +1,23 @@
-import asyncio
-from fastapi import FastAPI, Depends
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from api import router as api_router
+
 from alert import Alert
 from store import Store
-from loop import start_background_loop
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    scheduler = AsyncIOScheduler()
+    # repeat task every 10 seconds
+    scheduler.add_job(func=repeat_task, trigger='interval', seconds=10)
+    scheduler.start()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 app.mount('/static', StaticFiles(directory='static', html=True), name='static')
 
@@ -30,6 +40,5 @@ def get_store():
 
 app.dependency_overrides[Store] = get_store
 
-@app.on_event("startup")
-async def startup_event():
-    await start_background_loop(store)
+async def repeat_task():
+    print("Repeating task executed")
