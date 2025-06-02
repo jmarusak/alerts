@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from contextlib import asynccontextmanager
 
@@ -30,7 +32,7 @@ app.add_middleware(
 )
 
 store = Store()
-store.add_or_update(Alert(symbol='', below=0, above=0, last=''))
+store.add_or_update(Alert(symbol='AAA', below=0, above=0, last=''))
 
 app.include_router(api_router)
 
@@ -41,4 +43,10 @@ def get_store():
 app.dependency_overrides[Store] = get_store
 
 async def repeat_task():
+    timestamp = datetime.now().isoformat()
+
+    alerts = store.get_all()
+    for alert in alerts:
+        alert.last = timestamp
+        
     print("Repeating task executed")
