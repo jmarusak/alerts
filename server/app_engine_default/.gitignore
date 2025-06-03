@@ -1,0 +1,44 @@
+# Binaries for programs and tools
+*.exe
+*.dll
+*.so
+*.dylib
+*.out
+
+# Build artifacts
+/bin
+/pkg
+/vendor
+*.o
+*.a
+
+# IDE and editor specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.DS_Store
+
+# Test results
+test.out
+/testdata
+
+# Coverage results
+*.out
+*.profraw
+*.profdata
+
+# Dependency management
+go.sum
+go.mod
+
+# Temporary files
+*.tmp
+*.log
+
+# Config files
+.env
+
+# Other
+/docs

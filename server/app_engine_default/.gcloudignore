@@ -24,14 +24,5 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-web
 .env
 app.yaml
-
-# Python dev env specific files
-__pycache__/
-Makefile
-pyproject.toml
-README.md
-uv.lock
-app-template.yaml
