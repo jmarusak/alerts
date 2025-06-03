@@ -9,10 +9,12 @@ click==8.2.1
 curl-cffi==0.11.1
 fastapi==0.115.12
 frozendict==2.4.6
+gunicorn==23.0.0
 h11==0.16.0
 idna==3.10
 multitasking==0.0.11
 numpy==2.2.6
+packaging==25.0
 pandas==2.2.3
 peewee==3.18.1
 platformdirs==4.3.8

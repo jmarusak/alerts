@@ -1,5 +1,6 @@
 service: default
 runtime: python312
+max_instances: 1
 
 entrypoint: gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app
 
