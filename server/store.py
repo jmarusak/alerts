@@ -25,4 +25,16 @@ class Store:
 
     def export(self) -> None:
         with open('data/alerts.json', 'w') as f:
-            json.dump([alert for alert in self.alerts], f, indent=2)
+            json.dump([alert.dict() for alert in self.alerts], f, indent=2)
+
+    def import_alerts(self) -> None:
+        try:
+            with open('data/alerts.json', 'r') as f:
+                data = json.load(f)
+                self.alerts = [Alert(**alert_data) for alert_data in data]
+        except FileNotFoundError:
+            print("Alerts file not found. Starting with an empty alert list.")
+            self.alerts = []
+        except json.JSONDecodeError:
+            print("Error decoding alerts JSON. Starting with an empty alert list.")
+            self.alerts = []
