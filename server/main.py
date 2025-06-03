@@ -1,30 +1,31 @@
-from datetime import datetime
-import pytz
-
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from api import router as api_router
 
 from alert import Alert
 from store import Store
+from yahoo import get_alert_matches
+from pushover import send_alert
+from api import router as api_router
+
+def inject_store():
+    return store
+
+store = Store()
+store.add_or_update(Alert(symbol='NVDA', below=112, above=135, last=''))
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_: FastAPI):
     scheduler = AsyncIOScheduler()
-    # repeat task every 10 seconds
     scheduler.add_job(func=repeat_task, trigger='interval', seconds=10)
     scheduler.start()
     yield
 
 app = FastAPI(lifespan=lifespan)
-
 app.mount('/static', StaticFiles(directory='static', html=True), name='static')
-
-# CORS so React frontend can connect
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
@@ -32,23 +33,10 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-store = Store()
-store.add_or_update(Alert(symbol='AAA', below=0, above=0, last=''))
-
 app.include_router(api_router)
-
-# Dependency to inject the store instance
-def get_store():
-    return store
-
-app.dependency_overrides[Store] = get_store
+app.dependency_overrides[Store] = inject_store
 
 async def repeat_task():
-    new_york_tz = pytz.timezone('America/New_York')
-    timestamp = datetime.now(new_york_tz).isoformat()
-
-    alerts = store.get_all()
-    for alert in alerts:
-        alert.last = timestamp
-
-    print("Repeating task executed")
+    messages = get_alert_matches(store)
+    for message in messages:
+        send_alert(message)

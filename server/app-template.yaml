@@ -2,7 +2,7 @@ service: default
 runtime: python312
 
 entrypoint: gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app
-instance_class: F2
 
 env_variables:
-  SOME_ENV_VAR: "value"  # Add any environment variables here, if needed
+  PUSHOVER_API_USER: 
+  PUSHOVER_API_TOKEN: 
