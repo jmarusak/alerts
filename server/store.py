@@ -24,5 +24,5 @@ class Store:
         return self.alerts
 
     def export(self) -> None:
-        with open('alerts.json', 'w') as f:
-            json.dump([alert.dict() for alert in self.alerts], f, indent=4)
+        with open('data/alerts.json', 'w') as f:
+            json.dump([alert for alert in self.alerts], f, indent=2)

@@ -1,3 +1,6 @@
+import pytz
+from datetime import datetime
+
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from contextlib import asynccontextmanager
 
@@ -20,7 +23,7 @@ store.add_or_update(Alert(symbol='NVDA', below=112, above=135, last=''))
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(func=repeat_task, trigger='interval', minutes=30)
+    scheduler.add_job(func=repeat_task, trigger='interval', seconds=30)
     scheduler.start()
     yield
 
@@ -37,6 +40,11 @@ app.include_router(api_router)
 app.dependency_overrides[Store] = inject_store
 
 async def repeat_task():
+    new_york_tz = pytz.timezone('America/New_York')
+    timestamp = datetime.now(new_york_tz).isoformat()
+    print(f'Heartbeat at {timestamp}')
+
     messages = get_alert_matches(store)
     for message in messages:
         send_alert(message)
+        print(f'Alert: {message}')

@@ -171,8 +171,7 @@ cython_debug/
 .pypirc
 .aider*
 
-# ADK source files for Copilot
-adk/
+data/
 
 # Google App Engine files (Known to contain API_KEY)
 app.yaml
