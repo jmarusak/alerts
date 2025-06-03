@@ -20,7 +20,7 @@ store.add_or_update(Alert(symbol='NVDA', below=112, above=135, last=''))
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(func=repeat_task, trigger='interval', seconds=10)
+    scheduler.add_job(func=repeat_task, trigger='interval', minutes=30)
     scheduler.start()
     yield
 
