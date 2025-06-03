@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from alert import Alert
@@ -21,3 +22,7 @@ class Store:
 
     def get_all(self) -> List[Alert]:
         return self.alerts
+
+    def export(self) -> None:
+        with open('alerts.json', 'w') as f:
+            json.dump([alert.dict() for alert in self.alerts], f, indent=4)
