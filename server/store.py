@@ -23,9 +23,9 @@ class Store:
     def get_all(self) -> List[Alert]:
         return self.alerts
 
-    def export(self) -> None:
+    def export_alerts(self) -> None:
         with open('data/alerts.json', 'w') as f:
-            json.dump([alert.dict() for alert in self.alerts], f, indent=2)
+            json.dump([alert.model_dump() for alert in self.alerts], f, indent=2)
 
     def import_alerts(self) -> None:
         try:

@@ -171,7 +171,5 @@ cython_debug/
 .pypirc
 .aider*
 
-data/
-
 # Google App Engine files (Known to contain API_KEY)
 app.yaml

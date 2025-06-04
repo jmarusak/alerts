@@ -8,7 +8,6 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
-from alert import Alert
 from store import Store
 from yahoo import get_alert_matches
 from pushover import send_alert
@@ -18,12 +17,12 @@ def inject_store():
     return store
 
 store = Store()
-store.add_or_update(Alert(symbol='NVDA', below=112, above=135, last=''))
+store.import_alerts()
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(func=repeat_task, trigger='interval', seconds=30)
+    scheduler.add_job(func=repeat_task, trigger='interval', minutes=10)
     scheduler.start()
     yield
 
