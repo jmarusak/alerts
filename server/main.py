@@ -56,5 +56,3 @@ async def repeat_task():
         for message in messages:
             send_alert(message)
             print(f'Alert: {message}')
-    else:
-        print('Not running during off-market hours.')
