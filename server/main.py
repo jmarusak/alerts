@@ -40,10 +40,21 @@ app.dependency_overrides[Store] = inject_store
 
 async def repeat_task():
     new_york_tz = pytz.timezone('America/New_York')
-    timestamp = datetime.now(new_york_tz).isoformat()
-    print(f'Heartbeat at {timestamp}')
+    timestamp = datetime.now(new_york_tz)
+    print(f'Heartbeat at {timestamp.isoformat()}')
 
-    messages = get_alert_matches(store)
-    for message in messages:
-        send_alert(message)
-        print(f'Alert: {message}')
+    # Get the current time in New York
+    current_time = timestamp.time()
+
+    # Define the stock market hours (9:15 AM to 4:15 PM)
+    market_open = datetime.strptime('09:15', '%H:%M').time()
+    market_close = datetime.strptime('16:15', '%H:%M').time()
+
+    # Check if the current time is within market hours
+    if market_open <= current_time <= market_close:
+        messages = get_alert_matches(store)
+        for message in messages:
+            send_alert(message)
+            print(f'Alert: {message}')
+    else:
+        print('Not running during off-market hours.')
