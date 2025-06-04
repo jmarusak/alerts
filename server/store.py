@@ -13,11 +13,13 @@ class Store:
                 self.alerts[idx] = new_alert
                 return 'updated'
         self.alerts.append(new_alert)
+        self.export_alerts()
         return 'added'
 
     def delete(self, symbol: str) -> bool:
         initial_count = len(self.alerts)
         self.alerts = [alert for alert in self.alerts if alert.symbol != symbol]
+        self.export_alerts()
         return len(self.alerts) < initial_count
 
     def get_all(self) -> List[Alert]:
