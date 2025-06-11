@@ -1,14 +1,26 @@
 [
   {
-    "symbol": "NVDA",
-    "below": 138.0,
-    "above": 145.0,
+    "symbol": "LAZR",
+    "below": 3.65,
+    "above": 4.03,
+    "last": ""
+  },
+  {
+    "symbol": "GOOG",
+    "below": 152.06,
+    "above": 168.07,
     "last": ""
   },
   {
     "symbol": "TSLA",
-    "below": 319.0,
-    "above": 340.0,
+    "below": 313.33,
+    "above": 346.32,
+    "last": ""
+  },
+  {
+    "symbol": "LULU",
+    "below": 252.1,
+    "above": 278.64,
     "last": ""
   }
 ]
