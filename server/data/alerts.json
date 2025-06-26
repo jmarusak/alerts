@@ -1,26 +1,20 @@
 [
   {
-    "symbol": "LAZR",
-    "below": 3.65,
-    "above": 4.03,
-    "last": ""
-  },
-  {
     "symbol": "GOOG",
-    "below": 152.06,
-    "above": 168.07,
+    "below": 166.89,
+    "above": 177.21,
     "last": ""
   },
   {
-    "symbol": "TSLA",
-    "below": 313.33,
-    "above": 346.32,
+    "symbol": "AMD",
+    "below": 139.79,
+    "above": 148.44,
     "last": ""
   },
   {
-    "symbol": "LULU",
-    "below": 252.1,
-    "above": 278.64,
+    "symbol": "NVDA",
+    "below": 151.34,
+    "above": 160.7,
     "last": ""
   }
 ]
